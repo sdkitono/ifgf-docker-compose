@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+  frontend:
+    build: ./react-redux-ifgfseattle
+    ports:
+      - '3000:3000'
+      - '3001:3001'
+    volumes:
+      - ./react-redux-ifgfseattle:/usr/src/react-redux-ifgfseattle
+      - /usr/src/react-redux-ifgfseattle/node_modules
+    command: "npm run dev"
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "examplepassword"
+      MYSQL_DATABASE: "database_ifgf_development"
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql:/var/lib/mysql
+  backend:
+    build: ./ifgf-backend
+    ports:
+        - '8080:8080'
+        - '4040:4040'
+        - '5858:5858'
+    volumes:
+        - ./ifgf-backend:/usr/src/ifgf-backend
+        - /usr/src/ifgf-backend/node_modules
+    depends_on:
+        - "mysql"
+    env_file:
+      - ./ifgf-backend/.ifgf_backend.env
+    command: "yarn start"
+    
+volumes:
+  mysql:
+
+
+
+
+
+
