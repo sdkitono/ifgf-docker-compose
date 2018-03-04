@@ -1,15 +1,19 @@
-version: '2'
+version: '3.4'
 
 services:
   frontend:
-    build: ./react-redux-ifgfseattle
+    build:
+      context: ./react-redux-ifgfseattle
+      args:
+        user: ${USER}
+    user: ${USER}
     ports:
       - '3000:3000'
       - '3001:3001'
     volumes:
-      - ./react-redux-ifgfseattle:/usr/src/react-redux-ifgfseattle
-      - /usr/src/react-redux-ifgfseattle/node_modules
-    command: "npm run dev"
+      - ./react-redux-ifgfseattle:/react-redux-ifgfseattle
+      - /react-redux-ifgfseattle/node_modules
+    command: yarn run dev
   mysql:
     image: mysql:5.7
     environment:
