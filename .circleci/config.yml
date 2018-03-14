@@ -9,5 +9,5 @@ jobs:
           name: Checkout Dependencies
           command: git clone https://github.com/sdkitono/react-redux-ifgfseattle && git clone https://github.com/sdkitono/ifgf-backend
       - run:
-          name: Print the Current Time
-          command: date
+          name: Build Docker Compose
+          command: docker-compose build
