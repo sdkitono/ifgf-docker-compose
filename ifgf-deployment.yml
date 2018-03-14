@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ifgf-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ifgf
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: frontend
+        image: keyclipse/react-redux-ifgfseattle:latest
+        imagePullPolicy: "Always"
+        command: ["yarn"]
+        args: ["start"]
+        ports:
+        - name: http-port
+          containerPort: 8080
+      - name: backend
+        image: keyclipse/ifgf-backend:latest
+        imagePullPolicy: "Always"
+        command: ["yarn"]
+        args: ["start"]
+        ports:
+        - name: api-port
+          containerPort: 3030

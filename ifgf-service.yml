@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ifgf-service
+spec:
+  ports:
+  - port: 80
+    targetPort: http-port
+    protocol: TCP
+  selector:
+    app: ifgf
+  type: LoadBalancer

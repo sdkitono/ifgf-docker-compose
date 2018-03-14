@@ -6,6 +6,7 @@ services:
       context: ./react-redux-ifgfseattle
       args:
         user: ${USER}
+    image: keyclipse/react-redux-ifgfseattle  # goes to youruser DockerHub registry
     user: ${USER}
     ports:
       - '3000:3000'
@@ -25,18 +26,17 @@ services:
       - mysql:/var/lib/mysql
   backend:
     build: ./ifgf-backend
+    image: keyclipse/ifgf-backend  # goes to youruser DockerHub registry
     ports:
-        - '8080:8080'
-        - '4040:4040'
-        - '5858:5858'
+        - '3030:3030'
     volumes:
-        - ./ifgf-backend:/usr/src/ifgf-backend
-        - /usr/src/ifgf-backend/node_modules
+        - ./ifgf-backend:/ifgf-backend
+        - /ifgf-backend/node_modules
     depends_on:
         - "mysql"
-    env_file:
-      - ./ifgf-backend/.ifgf_backend.env
-    command: "yarn start"
+    # env_file:
+    #   - ./ifgf-backend/.ifgf_backend.env
+    command: "yarn dev"
     
 volumes:
   mysql:
