@@ -27,3 +27,13 @@ jobs:
       - run:
           name: Push Docker Compose
           command: docker-compose push
+      - run:
+          name: Kubernetes deployment Template
+          command: FRONTEND_TAG=${CIRCLE_SHA1} BACKEND_TAG=${CIRCLE_SHA1} envsubst < ./ifgf-deployment.template.yml > ./ifgf-deployment.yml
+      -run:
+          name: Kops export
+          command: kops export kubecfg --state s3://ifgfkopstest
+      - run:
+          name: Kubernetes deployment
+          command: kubectl apply -f ./ifgf-deployment.yml
+      
