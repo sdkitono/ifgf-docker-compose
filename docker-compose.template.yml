@@ -1,0 +1,52 @@
+version: '3.4'
+
+services:
+  frontend:
+    build:
+      context: ./react-redux-ifgfseattle
+      args:
+        user: samuelkitono
+    image: keyclipse/react-redux-ifgfseattle:${FRONTEND_TAG}  # goes to youruser DockerHub registry
+    user: samuelkitono
+    ports:
+      - '3000:3000'
+      - '3001:3001'
+    volumes:
+      - ./react-redux-ifgfseattle:/react-redux-ifgfseattle
+      - /react-redux-ifgfseattle/node_modules
+    command: yarn run dev
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "examplepassword"
+      MYSQL_DATABASE: "database_ifgf_development"
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql:/var/lib/mysql
+  backend:
+    build: 
+      context: ./ifgf-backend
+      args:
+        user: samuelkitono
+    image: keyclipse/ifgf-backend:${BACKEND_TAG}  # goes to youruser DockerHub registry
+    user: samuelkitono
+    ports:
+        - '3030:3030'
+    volumes:
+        - ./ifgf-backend:/ifgf-backend
+        - /ifgf-backend/node_modules
+    depends_on:
+        - "mysql"
+    # env_file:
+    #   - ./ifgf-backend/.ifgf_backend.env
+    command: "yarn dev"
+    
+volumes:
+  mysql:
+
+
+
+
+
+
