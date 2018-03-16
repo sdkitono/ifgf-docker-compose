@@ -20,7 +20,7 @@ jobs:
           command: docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - run:
           name: Docker Template
-          command: FRONTEND_TAG=${CIRCLE_SHA1} BACKEND_TAG=${CIRCLE_SHA1} envsubst < ./docker-compose.template.yml > ./docker-compose.yml
+          command: FRONTEND_TAG=${CIRCLE_BUILD_NUM} BACKEND_TAG=${CIRCLE_BUILD_NUM} envsubst < ./docker-compose.template.yml > ./docker-compose.yml
       - run:
           name: Build Docker Compose
           command: docker-compose build
@@ -28,12 +28,10 @@ jobs:
           name: Push Docker Compose
           command: docker-compose push
       - run:
-          name: Kubernetes deployment Template
-          command: FRONTEND_TAG=${CIRCLE_SHA1} BACKEND_TAG=${CIRCLE_SHA1} envsubst < ./ifgf-deployment.template.yml > ./ifgf-deployment.yml
-      - run:
           name: Kops export
           command: kops export kubecfg --name ifgftest.curchats.com --state s3://ifgfkopstest
       - run:
           name: Kubernetes deployment
-          command: kubectl apply -f ./ifgf-deployment.yml
+          command: kubectl set image deployment/ifgf-deployment frontend=keyclipse/react-redux-ifgfseattle:${CIRCLE_BUILD_NUM} backend=keyclipse/ifgf-backend:${CIRCLE_BUILD_NUM}
+
       
