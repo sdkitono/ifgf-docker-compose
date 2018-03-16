@@ -5,7 +5,7 @@ services:
     build:
       context: ./react-redux-ifgfseattle
       args:
-        user: ${USER}
+        user: samuelkitono
     image: keyclipse/react-redux-ifgfseattle  # goes to youruser DockerHub registry
     user: samuelkitono
     ports:
@@ -25,7 +25,10 @@ services:
     volumes:
       - mysql:/var/lib/mysql
   backend:
-    build: ./ifgf-backend
+    build: 
+      context: ./ifgf-backend
+      args:
+        user: samuelkitono
     image: keyclipse/ifgf-backend  # goes to youruser DockerHub registry
     user: samuelkitono
     ports:
