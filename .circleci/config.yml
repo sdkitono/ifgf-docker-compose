@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Kubernetes deployment Template
           command: FRONTEND_TAG=${CIRCLE_SHA1} BACKEND_TAG=${CIRCLE_SHA1} envsubst < ./ifgf-deployment.template.yml > ./ifgf-deployment.yml
-      -run:
+      - run:
           name: Kops export
           command: kops export kubecfg --state s3://ifgfkopstest
       - run:
