@@ -6,8 +6,8 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Docker Login
-        command: docker login -u $DOCKER_USER -p $DOCKER_PASS
+          name: Docker Login
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run:
           name: Checkout Dependencies
           command: git clone https://github.com/sdkitono/react-redux-ifgfseattle && git clone https://github.com/sdkitono/ifgf-backend
